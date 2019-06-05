@@ -27,14 +27,7 @@ Q4 = """SELECT P1.ticker, P2.close-P1.close FROM Price P1 JOIN Price P2 ON \
 P1.ticker=P2.ticker AND P1.dat="3/20/2019" AND P2.dat="3/21/2019" \
 JOIN Stock S ON P1.ticker=S.ticker WHERE S.market="NYSE" AND \
 P1.ticker NOT IN (SELECT P1.ticker FROM Price P1 WHERE P1.close<=100 GROUP BY P1.ticker) \
-ORDER BY P2.close-P1.close DESC limit 1;"""
-
-# Find dates where total price (price*numofshares) of AAPL firm sold was higher than what firm bought in NASDAQ
-Q5 = """SELECT B1.dat FROM Buynsell B1, Buynsell B2 \
-WHERE B1.dat=B2.dat AND B1.buy_or_sell="SELL" AND B2.buy_or_sell="BUY" \
-AND B1.ticker="AAPL" AND B2.ticker IN (SELECT S.ticker FROM Stock S WHERE S.market="NASDAQ") \
-GROUP BY B1.dat \
-HAVING (B1.price*B1.num_of_shares) > SUM(B2.price*B2.num_of_shares);"""   
+ORDER BY P2.close-P1.close DESC limit 1;""" 
 
 # Execute SQL query
 cursor.execute(Q1)
